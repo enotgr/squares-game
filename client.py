@@ -23,15 +23,15 @@ class Player():
     pygame.draw.rect(surface, self.color, self.rect)
 
 def handle_server_messages(s, other_player):
-  buffer = ""
+  buffer = ''
   while True:
     try:
-      data = s.recv(2048).decode("utf-8")
+      data = s.recv(2048).decode('utf-8')
       if data:
         buffer += data
         while '\n' in buffer:
           message, buffer = buffer.split('\n', 1)
-          dx, dy = map(int, message.split(","))
+          dx, dy = map(int, message.split(','))
           print('dx:', dx, 'dy:', dy)
           other_player.move(dx, dy)
     except socket.error as e:
@@ -40,11 +40,11 @@ def handle_server_messages(s, other_player):
 
 def main():
   s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-  s.connect(("YOUR SERVER IP ADDRESS", 5555))
+  s.connect(('YOUR SERVER IP ADDRESS', 5555))
 
-  color = s.recv(2048).decode("utf-8")
+  color = s.recv(2048).decode('utf-8')
   player = Player(width // 2, height // 2, color)
-  other_color = "red" if color == "blue" else "blue"
+  other_color = 'red' if color == 'blue' else 'blue'
   other_player = Player(width // 2, height // 2, other_color)
 
   # Создаем и запускаем поток для получения сообщений от сервера
@@ -77,7 +77,7 @@ def main():
 
     if dx != 0 or dy != 0:
       try:
-        s.sendall(f"{dx},{dy}\n".encode("utf-8"))
+        s.sendall(f'{dx},{dy}\n'.encode('utf-8'))
         player.move(dx, dy)
         pygame.time.delay(20)
       except socket.error as e:
@@ -89,5 +89,5 @@ def main():
     other_player.draw(screen)
     pygame.display.flip()
 
-if __name__ == "__main__":
+if __name__ == '__main__':
   main()
