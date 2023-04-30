@@ -1,3 +1,2 @@
 # Squares game
-Simple online game for 2 players
-With using sockets and pygame
+Simple online game for 2 players with using sockets and pygame
